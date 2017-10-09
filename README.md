@@ -1,2 +1,4 @@
 # vagrant_moloch
-moloch in vagrant box
+
+* http://molo.ch/#downloads
+* https://www.vagrantup.com/downloads.html
