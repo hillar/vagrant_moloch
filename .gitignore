@@ -1,5 +1,7 @@
 .vagrant
 *.deb
+*.zip
+*.pcap
 # Logs
 logs
 *.log
