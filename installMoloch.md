@@ -59,12 +59,19 @@ apt-get -y install libwww-perl libjson-perl libyaml-dev
 ```bash
 wget -q -4 https://files.molo.ch/builds/ubuntu-16.04/moloch-nightly_amd64.deb
 dpkg -i moloch-nightly_amd64.deb
+
 /data/moloch-nightly/bin/Configure
 /data/moloch-nightly/db/db.pl http://localhost:9200 init
 /data/moloch-nightly/bin/moloch_add_user.sh admin "Admin User" <password> --admin
-systemctl enable molochviewer.service
+
 systemctl start molochviewer.service
-systemctl enable molochcapture.service
-systemctl start molochcapture.service
+
+```
+
+## read pcap
+
+```bash
+cd /data/moloch-nightly/bin/
+./moloch-capture -c ../etc/config.ini -r 2017-09-19-traffic-analysis-exercise.pcap
 
 ```
