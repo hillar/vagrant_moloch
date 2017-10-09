@@ -1,6 +1,6 @@
 # storing and indexing network traffic in standard PCAP format, while also providing fast indexed access.
 
-![alt text](https://github.com/aol/moloch/wiki/SingleHostMoloch.gif)
+![alt text](moloch-kiss.png)
 
 ## storing  network traffic in standard PCAP
 
