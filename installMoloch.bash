@@ -60,13 +60,17 @@ echo -en "INIT" | /data/moloch-nightly/db/db.pl http://localhost:9200 init >> /v
 /data/moloch-nightly/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
 systemctl enable molochviewer.service
 systemctl start molochviewer.service
+curl -s localhost:9200/_cat/indices?v
 # no need to start capture
 #ethtool -K enp0s3 tx off sg off gro off gso off lro off tso off >> /vagrant/provision.log 2>&1
 #ethtool -K enp0s8 tx off sg off gro off gso off lro off tso off >> /vagrant/provision.log 2>&1
 #systemctl start molochcapture.service
 
 #get some sample traffic
-
+apt-get -y install unzip >> /vagrant/provision.log 2>&1
 [ -f 2017-09-19-traffic-analysis-exercise.pcap.zip ] || wget -q -4 http://www.malware-traffic-analysis.net/2017/09/19/2017-09-19-traffic-analysis-exercise.pcap.zip
 [ -f 2017-09-19-traffic-analysis-exercise.pcap ] || unzip -P infected /vagrant/2017-09-19-traffic-analysis-exercise.pcap.zip
 /data/moloch-nightly/bin/moloch-capture -c /data/moloch-nightly/etc/config.ini -r 2017-09-19-traffic-analysis-exercise.pcap -t MISSION_POSSIBLE >> /vagrant/provision.log 2>&1
+
+sleep 10
+curl -s localhost:9200/_cat/indices?v
