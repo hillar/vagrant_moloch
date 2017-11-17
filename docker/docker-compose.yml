@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  elastic:
+    image: elasticsearch:5
+    ports:
+      - "9200:9200"
+  molo:
+    image: molo
+    #command: /bin/sh -c 'yarn && yarn migrate:latest && yarn dev'
+    volumes:
+      - ./data:/data
+      - ./log:/data/moloch/logs
+      - ./raw-pcaps:/data/moloch/raw
+    working_dir: /data
+    ports:
+      - "8005:8005"
+    depends_on:
+      - "elastic"
+
+volumes:
+  es-data:
+  logs:
+  raw-pcaps:
