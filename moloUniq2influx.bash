@@ -8,7 +8,7 @@ do
   do
   echo "$vlan $field"
   end=$(date --date='2 minutes ago' +%s)
-  start=$(date --date='120 minutes ago' +%s)
+  start=$(date --date='12 minutes ago' +%s)
   time=$(echo "startTime=$start&stopTime=$end")
   #URL="http://localhost:8005/unique.txt?$time&expression=databytes.src%3E0%26%26databytes.dst%3E0%26%26vlan%3D$vlan&field=$field&counts=1"
 URL="http://192.168.10.11:8005/unique.txt?$time&expression=databytes.src%3E0%26%26databytes.dst%3E0&field=$field&counts=1"

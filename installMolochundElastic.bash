@@ -82,14 +82,19 @@ ethtool -K enp0s3 tx off sg off gro off gso off lro off tso off
 /data/moloch-nightly/bin/moloch-capture -c /data/moloch-nightly/etc/config.ini > /tmp/moloch-capture.log 2>&1 &
 
 curl -i -XPOST http://192.168.10.12:8086/query --data-urlencode "q=CREATE DATABASE molouniqs"
+curl -s -XPOST --user admin:admin 192.168.11.12:3000/api/datasources -H "Content-Type: application/json" -d '{
+    "name": "moloch",
+    "type": "influxdb",
+    "access": "proxy",
+    "url": "http://localhost:8086",
+    "database": "molouniqs",
+    "isDefault": true
+}'
 
 mkdir /data/moloch-nightly/stats
 cd /data/moloch-nightly/stats
 wget -q https://raw.githubusercontent.com/hillar/atoll.js/master/lib/atoll.js
 echo '{}' > package.json
 npm install --save influx
-wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/moloUniq2influx.js 
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/moloUniq2influx.js
 wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/moloUniq2influx.bash
-
-
-

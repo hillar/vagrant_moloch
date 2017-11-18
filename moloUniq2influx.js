@@ -68,7 +68,13 @@ fs.readFile("/dev/stdin", "utf8", function(error, contents) {
         field: tfield
       },
       fields: measures
-    }]);
+    }]).then(() => {
+					console.dir(measures);
+					return;
+		}).catch(err => {
+        console.error(`Encountered error while writing measurements: ${err.message}`);
+      });;
+
     console.dir(influx)
   }
 });
