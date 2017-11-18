@@ -27,7 +27,7 @@ echo "$(date) installing java"
 add-apt-repository ppa:webupd8team/java >> /vagrant/provision.log 2>&1
 apt-get update >> /vagrant/provision.log 2>&1
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-apt-get -y install oracle-java8-installer >> /vagrant/provision.log 2>&1
+apt-get -y --allow-unauthenticated install oracle-java8-installer >> /vagrant/provision.log 2>&1
 java -version
 
 echo "$(date) installing Elasticsearch"
@@ -67,13 +67,13 @@ curl -s localhost:9200/_cat/indices?v
 #systemctl start molochcapture.service
 
 #get some sample traffic
-apt-get -y install unzip >> /vagrant/provision.log 2>&1
-[ -f 2017-09-19-traffic-analysis-exercise.pcap.zip ] || wget -q -4 http://www.malware-traffic-analysis.net/2017/09/19/2017-09-19-traffic-analysis-exercise.pcap.zip
-[ -f 2017-09-19-traffic-analysis-exercise.pcap ] || unzip -P infected /vagrant/2017-09-19-traffic-analysis-exercise.pcap.zip
-/data/moloch-nightly/bin/moloch-capture -c /data/moloch-nightly/etc/config.ini -r 2017-09-19-traffic-analysis-exercise.pcap -t MISSION_POSSIBLE >> /vagrant/provision.log 2>&1
+#apt-get -y install unzip >> /vagrant/provision.log 2>&1
+#[ -f 2017-09-19-traffic-analysis-exercise.pcap.zip ] || wget -q -4 http://www.malware-traffic-analysis.net/2017/09/19/2017-09-19-traffic-analysis-exercise.pcap.zip
+#[ -f 2017-09-19-traffic-analysis-exercise.pcap ] || unzip -P infected /vagrant/2017-09-19-traffic-analysis-exercise.pcap.zip
+#/data/moloch-nightly/bin/moloch-capture -c /data/moloch-nightly/etc/config.ini -r 2017-09-19-traffic-analysis-exercise.pcap -t MISSION_POSSIBLE >> /vagrant/provision.log 2>&1
 
-sleep 10
-curl -s localhost:9200/_cat/indices?v
+#sleep 10
+#curl -s localhost:9200/_cat/indices?v
 
 # do some numbers...
 ethtool -K enp0s8 tx off sg off gro off gso off lro off tso off
@@ -82,7 +82,7 @@ ethtool -K enp0s3 tx off sg off gro off gso off lro off tso off
 /data/moloch-nightly/bin/moloch-capture -c /data/moloch-nightly/etc/config.ini > /tmp/moloch-capture.log 2>&1 &
 
 curl -i -XPOST http://192.168.10.12:8086/query --data-urlencode "q=CREATE DATABASE molouniqs"
-curl -s -XPOST --user admin:admin 192.168.11.12:3000/api/datasources -H "Content-Type: application/json" -d '{
+curl -s -XPOST --user admin:admin 192.168.10.12:3000/api/datasources -H "Content-Type: application/json" -d '{
     "name": "moloch",
     "type": "influxdb",
     "access": "proxy",
