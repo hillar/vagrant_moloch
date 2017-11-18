@@ -14,6 +14,8 @@ do
 URL="http://192.168.10.11:8005/unique.txt?$time&expression=databytes.src%3E0%26%26databytes.dst%3E0&field=$field&counts=1"
   echo $URL
   curl -m 2 -s --digest -uadmin:admin $URL > $vlan.$field.txt
+  # send beartbeat
+  curl -i -XPOST 'http://192.168.10.12:8086/write?db=molouniqs' --data-binary "heartbeat,field=$field,vlan=$vlan value=1 $(date +%s%N)"
   [ $? -eq 0 ] || break
   vl=$(wc -l $vlan.$field.txt | cut -f1 -d" ")
   #[ $vl -eq 0 ] || break
