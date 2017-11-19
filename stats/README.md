@@ -8,3 +8,32 @@ see
 * https://github.com/hillar/atoll.js
 
 ![centralMoment](../Screen_Shot_2017-05-10_at_12.06.05.png)
+
+### example
+
+```bash
+# create influxdb database
+curl -i -XPOST http://192.168.10.12:8086/query --data-urlencode "q=CREATE DATABASE molouniqs"
+
+# download scripts
+mkdir /data/moloch-nightly/stats
+cd /data/moloch-nightly/stats
+wget -q https://raw.githubusercontent.com/hillar/atoll.js/master/lib/atoll.js
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/vectorstats.js
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/moloUniq2influx.bash
+
+# edit moloUniq2influx.bash and run it
+
+bash moloUniq2influx.bash
+
+# create grafana datasource
+curl -s -XPOST --user admin:admin 192.168.10.12:3000/api/datasources -H "Content-Type: application/json" -d '{
+    "name": "moloch",
+    "type": "influxdb",
+    "access": "proxy",
+    "url": "http://localhost:8086",
+    "database": "molouniqs",
+    "isDefault": true
+}'
+# wait for some window time then open grafana
+```

@@ -14,7 +14,7 @@
 
 Retrieve the unique data with *counts* for a fields, calculate on counts vector: **min, max, size, Sigma, .. kurtosisPop** and send to *influxdb*.
 
-* see https://github.com/hillar/vagrant_moloch/tree/master/statslines
+* see https://github.com/hillar/vagrant_moloch/tree/master/stats
 
 ![centralMoment](Screen_Shot_2017-05-10_at_12.06.05.png)
 
