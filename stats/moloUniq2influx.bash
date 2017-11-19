@@ -59,7 +59,9 @@ do
     # calculate single number values of vector
     # see https://github.com/hillar/atoll.js
     #                         take counts only
-    [[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | node vectorstats.js > $vlan.$field.stats
+    #[[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | node descriptivestats.js > $vlan.$field.stats
+    [[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | bash descriptivestats.bash > $vlan.$field.stats
+
     statslines=$(wc -l $vlan.$field.stats | cut -f1 -d" ")
     [[ $DEBUG -gt 0 ]] && echo  "$vlan $field $mololines $statslines"
     #[[ $statslines -eq 0 ]] ||

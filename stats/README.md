@@ -13,6 +13,8 @@ Retrieve the unique data with *counts* for a fields (a1,p2,sl,pa,db,...), calcul
 
 and send to *influxdb*.
 
+> You do not need to know, what kurtosis und skewness do. You just need to see that collecting Descriptive Statistics Timelines give you a CHANGE.
+
 see
 * https://github.com/aol/moloch/wiki/API#uniquetxt
 * https://github.com/aol/moloch/blob/39a2771f72544ee0050a06c9e624954301753849/viewer/viewer.js#L3651
@@ -67,4 +69,10 @@ curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
 * Standard deviation is measure of dispersion.
 * Variance is equal to the standard deviation squared.
 * Sigma (Σ) means summation.
-* PI means product of. 
+* PI means product of.
+
+----
+
+describing is done with one of:
+ * bash : [descriptivestats.bash](descriptivestats.bash)
+ * javascript (nodejs) : [descriptivestats.js](descriptivestats.js)
