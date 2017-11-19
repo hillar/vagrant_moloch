@@ -1,6 +1,17 @@
-## stats
+## Descriptive Statistics
 
-Retrieve the unique data with *counts* for a fields (a1,p2,sl,pa,db,...), calculate on counts vector: **min, max, size, Sigma, mean, median, centralMoment, variance, variancePop, stableVariance, stableVariancePop, stdDev, stdDevPop, stableStdDev, stableStdDevPop, skewness, skewnessPop, kurtosis, kurtosisPop** and send to *influxdb*.
+Retrieve the unique data with *counts* for a fields (a1,p2,sl,pa,db,...), calculate on counts vector:
+* min
+* max
+* size
+* Sigma, PI
+* mean, median, centralMoment
+* variance, variancePop, stableVariance, stableVariancePop
+* stdDev, stdDevPop, stableStdDev, stableStdDevPop
+* skewness, skewnessPop
+* kurtosis, kurtosisPop
+
+and send to *influxdb*.
 
 see
 * https://github.com/aol/moloch/wiki/API#uniquetxt
@@ -44,7 +55,16 @@ curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
 wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/dashboard-fieldsonsamegraf.json
 curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
 -H 'Content-Type: application/json;charset=UTF-8' \
---data-binary @dashboard-fieldsonsamegraf.json 
+--data-binary @dashboard-fieldsonsamegraf.json
 
 # wait for some window time then open grafana
 ```
+
+----
+
+* Skewness is the extent to which the data are not symmetrical.
+* Kurtosis is extent to which the data are peaked.
+* Standard deviation is measure of dispersion.
+* Variance is equal to the standard deviation squared.
+* Sigma (Σ) means summation.
+* PI means product of. 
