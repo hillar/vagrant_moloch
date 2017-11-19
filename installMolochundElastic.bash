@@ -96,5 +96,5 @@ cd /data/moloch-nightly/stats
 wget -q https://raw.githubusercontent.com/hillar/atoll.js/master/lib/atoll.js
 echo '{}' > package.json
 npm install --save influx
-wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/vectorstats.js
-wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/moloUniq2influx.bash
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/vectorstats.js
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/moloUniq2influx.bash
