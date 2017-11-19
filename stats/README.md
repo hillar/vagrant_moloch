@@ -35,5 +35,16 @@ curl -s -XPOST --user admin:admin 192.168.10.12:3000/api/datasources -H "Content
     "database": "molouniqs",
     "isDefault": true
 }'
+# create grafana dashboards
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/dashboard-grahpperfieldandfunc.json
+curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
+-H 'Content-Type: application/json;charset=UTF-8' \
+--data-binary @dashboard-grahpperfieldandfunc.json
+
+wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/dashboard-fieldsonsamegraf.json
+curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
+-H 'Content-Type: application/json;charset=UTF-8' \
+--data-binary @dashboard-fieldsonsamegraf.json 
+
 # wait for some window time then open grafana
 ```
