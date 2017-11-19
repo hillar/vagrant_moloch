@@ -76,3 +76,4 @@ curl -uadmin:admin 'http://192.168.10.12:3000/api/dashboards/import' \
 describing is done with one of:
  * bash : [descriptivestats.bash](descriptivestats.bash)
  * javascript (nodejs) : [descriptivestats.js](descriptivestats.js)
+ * R : descriptivestats.R (TODO)

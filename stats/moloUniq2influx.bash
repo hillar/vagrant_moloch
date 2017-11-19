@@ -6,7 +6,9 @@
 
 DEBUG="0"
 MOLO="192.168.10.11:8005"
+MOLOUSERPWD="admin:admin"
 INFLUX="192.168.10.12:8086"
+#INFLUXUSERPWD="admin:admin"
 #url encoded filter
 #EXPRESSION="expression=databytes.src%3E0%26%26databytes.dst%3E0"
 EXPRESSION=""
@@ -17,6 +19,9 @@ OVERLAP="60"
 WAITFORELASTIC="90"
 MOLOTIMEOUT="2"
 
+STATSCALCULATORSCRIPT="bash ./descriptivestats.bash"
+
+# no need to change down here ..
 # startTime & stopTime are from now()
 STOP=$WAITFORELASTIC
 START=$((WINDOW+STOP))
@@ -40,7 +45,7 @@ do
     #URL="http://localhost:8005/unique.txt?$time&expression=databytes.src%3E0%26%26databytes.dst%3E0%26%26vlan%3D$vlan&field=$field&counts=1"
     URL="http://$MOLO/unique.txt?$time&$EXPRESSION&field=$field&counts=1"
     [[ $DEBUG -gt 0 ]] && echo $URL
-    curl -m $MOLOTIMEOUT -s --digest -uadmin:admin $URL > $vlan.$field.txt
+    curl -m $MOLOTIMEOUT -s --digest -u$MOLOUSERPWD $URL > $vlan.$field.txt
     molook=$?
     [[ $molook -eq 0 ]] || echo "$(date) ERROR: moloch ($(MOLO)) did not respond in $MOLOTIMEOUT"
     [[ $molook -eq 0 ]] || break
@@ -60,7 +65,7 @@ do
     # see https://github.com/hillar/atoll.js
     #                         take counts only
     #[[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | node descriptivestats.js > $vlan.$field.stats
-    [[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | bash descriptivestats.bash > $vlan.$field.stats
+    [[ $mololines -gt 0 ]] && cut -f2 -d, $vlan.$field.txt | $STATSCALCULATORSCRIPT > $vlan.$field.stats
 
     statslines=$(wc -l $vlan.$field.stats | cut -f1 -d" ")
     [[ $DEBUG -gt 0 ]] && echo  "$vlan $field $mololines $statslines"
