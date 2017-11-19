@@ -27,7 +27,7 @@ echo "$(date) INFO: starting with window $WINDOW overlap $OVERLAP elawait $WAITF
 while true
 do
  vlan="dummy"
- #for vlan in 89 82 81 73 83 88 85 100 71
+ #for vlan in 89 88
  #do
   timer_start=$(date +%s)
   end=$(date --date="$STOP seconds ago" +%s)
@@ -44,11 +44,12 @@ do
     molook=$?
     [[ $molook -eq 0 ]] || echo "$(date) ERROR: moloch ($(MOLO)) did not respond in $MOLOTIMEOUT"
     [[ $molook -eq 0 ]] || break
-    NOW=$(date +%s)
     # send beartbeat
     mololines=$(wc -l $vlan.$field.txt | cut -f1 -d" ")
     # see https://docs.influxdata.com/influxdb/v1.3/guides/writing_data/#writing-data-using-the-http-api
-    curl -s -XPOST "http://$INFLUX/write?db=molouniqs&precision=s" --data-binary "heartbeat,field=$field,vlan=$vlan value=$mololines $NOW"
+    curl -s -m $MOLOTIMEOUT -XPOST "http://$INFLUX/write?db=molouniqs&precision=s" --data-binary "_heartbeat_,field=$field,vlan=$vlan value=$mololines $(date +%s)"
+    influxok=$?
+    [[ $influxok -eq 0 ]] || echo "$(date) ERROR: Influxdb ($INFLUX) did not respond in $MOLOTIMEOUT"
     # do somestats ...
     observationtime=$(date --date="$START seconds ago" +%s)
     rm $vlan.$field.stats
@@ -65,11 +66,6 @@ do
     cat $vlan.$field.stats | while read line; do
       # see https://docs.influxdata.com/influxdb/v1.3/guides/writing_data/#writing-points-from-a-file
       echo $line | awk '{print $1 ",field='$field' value=" $2 " '$observationtime'"}';
-      #sf=$(echo $line | cut -f1 -d" ")
-      #sv=$(echo $line | cut -f2 -d" ")
-      #sd="$sf,field=$field,vlan=$vlan value=$sv $observationtime"
-      #echo $sd
-      #curl -s -XPOST "http://$INFLUX/write?db=molouniqs&precision=s" --data-binary "$sd"
     done | curl -s -m $MOLOTIMEOUT -XPOST "http://$INFLUX/write?db=molouniqs&precision=s" --data-binary @-
     influxok=$?
     [[ $influxok -eq 0 ]] || echo "$(date) ERROR: Influxdb ($INFLUX) did not respond in $MOLOTIMEOUT"
