@@ -1,4 +1,3 @@
-
 // read vector from stdin
 // apply standard stat functions what return single numeric value
 // and write to stdout
@@ -38,7 +37,7 @@ fs.readFile("/dev/stdin", "utf8", function(error, contents) {
     for (var f in functions) {
       var value = stat[f]();
       if (value != 0 && value != Infinity && value != -Infinity && !isNaN(value)) {
-        console.log(f,value)
+        console.log(f, value)
       }
     }
   }

@@ -1,0 +1,15 @@
+
+digraph minimal_moloch {
+"pcap" [color=white]
+"pcap" -> "moloch-capture" -> "elasticsearch" -> "moloch-viewer" -> "browser"
+"browser" [color=white]
+"moloch-capture" -> DISK [color=red]
+{rank=same; "moloch-capture" DISK}
+"java" -> "elasticsearch" [color="white"]
+{rank=same; java elasticsearch}
+"nodejs" -> "moloch-viewer" [color="white"]
+{rank=same "nodejs" "moloch-viewer" "descriptive-stats" influxdb grafana}
+"moloch-viewer" -> "descriptive-stats" [label="unique.txt"]
+"descriptive-stats" -> influxdb [label="timeseries"]
+influxdb -> grafana -> browser
+}

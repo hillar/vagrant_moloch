@@ -1,5 +1,7 @@
 ## Descriptive Statistics
 
+![desc-stats.png](desc-stats.png)
+
 Retrieve the unique data with *counts* for a fields (a1,p2,sl,pa,db,...), calculate on counts vector:
 * min
 * max
