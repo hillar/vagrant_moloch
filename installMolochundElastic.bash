@@ -98,3 +98,10 @@ echo '{}' > package.json
 npm install --save influx
 wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/vectorstats.js
 wget -q https://raw.githubusercontent.com/hillar/vagrant_moloch/master/stats/moloUniq2influx.bash
+
+
+# user r <- litter not R ;)
+
+apt-get install r-base
+apt-get install r-cran-littler
+echo 'install.packages("moments")' | /usr/bin/r -i
